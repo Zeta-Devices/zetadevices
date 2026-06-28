@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products — ZETA DEVICES</title>
+<link href="https://fonts.googleapis.com/css2?family=Atomic+Age&family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --black: #080808; --white: #f0f0f0; --dim: #888; --accent: #c8f000; }
+  body { background: var(--black); color: var(--white); font-family: 'Share Tech Mono', monospace; min-height: 100vh; }
+
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 24px 48px; border-bottom: 1px solid #222; }
+  .nav-logo { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 6px; color: var(--white); text-decoration: none; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 11px; letter-spacing: 3px; color: var(--dim); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+
+  .page-header { text-align: center; padding: 60px 48px 40px; border-bottom: 1px solid #181818; }
+  .page-eyebrow { font-size: 11px; letter-spacing: 6px; color: var(--accent); text-transform: uppercase; margin-bottom: 16px; }
+  .page-title { font-family: 'Atomic Age', cursive; font-size: clamp(36px, 6vw, 72px); color: var(--white); }
+
+  .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: #181818; max-width: 1100px; margin: 60px auto; border: 1px solid #181818; }
+
+  .product-card { background: var(--black); padding: 48px 40px; display: flex; flex-direction: column; }
+
+  .product-badge { display: inline-flex; align-items: center; gap: 8px; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 32px; padding: 8px 16px; border: 1px solid #222; width: fit-content; }
+  .badge-sold-out { color: #ff3b3b; border-color: #ff3b3b33; }
+  .badge-sold-out::before { content: ''; width: 6px; height: 6px; background: #ff3b3b; border-radius: 50%; animation: pulse 2s infinite; }
+  .badge-coming-soon { color: var(--accent); border-color: #c8f00033; }
+  .badge-coming-soon::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .product-name { font-family: 'Atomic Age', cursive; font-size: 42px; color: var(--white); margin-bottom: 8px; }
+  .product-subtitle { font-size: 11px; letter-spacing: 4px; color: var(--dim); text-transform: uppercase; margin-bottom: 32px; }
+  .product-price { font-family: 'Orbitron', sans-serif; font-size: 28px; font-weight: 700; color: var(--white); margin-bottom: 40px; }
+
+  .spec-table { width: 100%; border-collapse: collapse; margin-bottom: 40px; flex: 1; }
+  .spec-table tr { border-bottom: 1px solid #141414; }
+  .spec-table tr:last-child { border-bottom: none; }
+  .spec-table td { padding: 10px 0; font-size: 12px; letter-spacing: 1px; }
+  .spec-table td:first-child { color: var(--dim); width: 45%; }
+  .spec-table td:last-child { color: var(--white); text-align: right; }
+
+  .product-btn { display: block; text-align: center; padding: 14px 24px; font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; text-decoration: none; margin-top: auto; }
+  .btn-sold-out { border: 1px solid #333; color: #444; cursor: not-allowed; }
+  .btn-coming-soon { border: 1px solid #c8f00033; color: var(--accent); cursor: not-allowed; }
+
+  .divider { width: 1px; height: 60px; background: linear-gradient(to bottom, #333, transparent); margin: 0 auto 60px; }
+
+  .compare-section { max-width: 900px; margin: 0 auto 80px; padding: 0 48px; }
+  .compare-label { font-size: 11px; letter-spacing: 6px; color: var(--dim); text-transform: uppercase; margin-bottom: 32px; text-align: center; }
+  .compare-table { width: 100%; border-collapse: collapse; }
+  .compare-table th { font-family: 'Orbitron', sans-serif; font-size: 11px; letter-spacing: 3px; color: var(--dim); text-transform: uppercase; padding: 12px 16px; border-bottom: 1px solid #222; text-align: left; }
+  .compare-table th:not(:first-child) { text-align: center; }
+  .compare-table td { padding: 12px 16px; font-size: 12px; letter-spacing: 1px; border-bottom: 1px solid #111; }
+  .compare-table td:first-child { color: var(--dim); }
+  .compare-table td:not(:first-child) { text-align: center; color: var(--white); }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .highlight { color: var(--accent) !important; }
+
+  footer { border-top: 1px solid #111; padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; }
+  footer span { font-size: 11px; color: #333; letter-spacing: 2px; }
+
+  @media (max-width: 700px) {
+    nav { padding: 20px 24px; }
+    .nav-links { gap: 16px; }
+    .products-grid { grid-template-columns: 1fr; }
+    .page-header { padding: 40px 24px 30px; }
+    .compare-section { padding: 0 24px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">ZETA DEVICES</a>
+  <ul class="nav-links">
+    <li><a href="index.html#how">How it works</a></li>
+    <li><a href="index.html#specs">Specs</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#faq">FAQ</a></li>
+    <li><a href="index.html#waitlist">Waitlist</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <p class="page-eyebrow">ZETA DEVICES</p>
+  <h1 class="page-title">Products</h1>
+</div>
+
+<div class="products-grid">
+
+  <!-- Prototype -->
+  <div class="product-card">
+    <div class="product-badge badge-sold-out">Sold Out</div>
+    <div class="product-name">ZETA</div>
+    <div class="product-subtitle">Prototype — First Edition</div>
+    <div class="product-price">$250 AUD</div>
+    <table class="spec-table">
+      <tr><td>Brain</td><td>Pi Zero 2 W</td></tr>
+      <tr><td>RAM</td><td>512MB</td></tr>
+      <tr><td>Storage</td><td>32GB</td></tr>
+      <tr><td>Display</td><td>2.8" resistive touch</td></tr>
+      <tr><td>Audio</td><td>Mic + speaker</td></tr>
+      <tr><td>Battery</td><td>External power bank</td></tr>
+      <tr><td>Battery life</td><td>Depends on power bank</td></tr>
+      <tr><td>Shell</td><td>3D printed</td></tr>
+      <tr><td>AI</td><td>Groq powered</td></tr>
+      <tr><td>WiFi</td><td>Yes</td></tr>
+      <tr><td>Input</td><td>Voice + touch</td></tr>
+      <tr><td>Game</td><td>Snake built in</td></tr>
+    </table>
+    <a class="product-btn btn-sold-out">SOLD OUT</a>
+  </div>
+
+  <!-- V1 -->
+  <div class="product-card">
+    <div class="product-badge badge-coming-soon">Coming Soon</div>
+    <div class="product-name">ZETA V1</div>
+    <div class="product-subtitle">First Commercial Model</div>
+    <div class="product-price">$350 AUD</div>
+    <table class="spec-table">
+      <tr><td>Brain</td><td class="highlight">Pi Zero 2 W</td></tr>
+      <tr><td>RAM</td><td>512MB</td></tr>
+      <tr><td>Storage</td><td class="highlight">128GB</td></tr>
+      <tr><td>Display</td><td class="highlight">3.5" resistive touch</td></tr>
+      <tr><td>Audio</td><td>Mic + speaker</td></tr>
+      <tr><td>Battery</td><td class="highlight">Built in LiPo 2000mAh</td></tr>
+      <tr><td>Battery life</td><td class="highlight">~3-4 hours</td></tr>
+      <tr><td>Shell</td><td>3D printed</td></tr>
+      <tr><td>AI</td><td>Groq powered</td></tr>
+      <tr><td>WiFi</td><td>Yes</td></tr>
+      <tr><td>Input</td><td>Voice + touch</td></tr>
+      <tr><td>Game</td><td>Snake built in</td></tr>
+    </table>
+    <a href="index.html#waitlist" class="product-btn btn-coming-soon">JOIN WAITLIST</a>
+  </div>
+
+</div>
+
+<div class="divider"></div>
+
+<div class="compare-section">
+  <p class="compare-label">Side by side</p>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Spec</th>
+        <th>Prototype</th>
+        <th>V1</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Storage</td><td>32GB</td><td class="highlight">128GB</td></tr>
+      <tr><td>Display</td><td>2.8"</td><td class="highlight">3.5"</td></tr>
+      <tr><td>Battery</td><td>External</td><td class="highlight">Built in</td></tr>
+      <tr><td>Battery life</td><td>Varies</td><td class="highlight">3-4 hours</td></tr>
+      <tr><td>AI</td><td>Groq</td><td>Groq</td></tr>
+      <tr><td>Voice input</td><td>Yes</td><td>Yes</td></tr>
+      <tr><td>Touch input</td><td>Yes</td><td>Yes</td></tr>
+      <tr><td>Snake game</td><td>Yes</td><td>Yes</td></tr>
+      <tr><td>Price</td><td>$250 AUD</td><td class="highlight">$350 AUD</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<footer>
+  <span>© 2026 ZETA DEVICES</span>
+  <span>AUSTRALIA</span>
+</footer>
+
+</body>
+</html>
